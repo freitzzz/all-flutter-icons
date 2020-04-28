@@ -47,7 +47,7 @@ class MyHomePage extends StatelessWidget {
                 top: 32.0,
               ),
               child: Text(
-                icons[index].identifier,
+                iconModel.identifier,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
