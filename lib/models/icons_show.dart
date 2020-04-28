@@ -6,7 +6,10 @@ class IconModel {
 
   final IconData data;
 
-  const IconModel({this.identifier, this.data});
+  const IconModel({
+    this.identifier,
+    this.data,
+  });
 }
 
 List<IconModel> icons = [
