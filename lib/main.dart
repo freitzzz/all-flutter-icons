@@ -1,7 +1,10 @@
+import 'package:app/bloc/bloc.dart';
 import 'package:app/models/models.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'models/icons_show.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,134 +14,92 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Icons',
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+      home: BlocProvider(
+        create: (context) => IconsBloc()
+          ..add(
+            RetrieveIconsStarted(
+              isToRetrieveCupertinoIcons: false,
+            ),
+          ),
+        child: MyHomePage(),
+      ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin {
-  String _title = 'Material Icons';
-  bool _androidOrCupertino = true;
-
+class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        centerTitle: true,
-        title: Text(
-          _title,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 40,
-          ),
-        ),
-        actions: <Widget>[
-          Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconButton(
-                icon: Image.asset(
-                  'apple_logo.png',
+    return BlocBuilder<IconsBloc, IconsState>(
+      builder: (context, state) {
+        if (state is RetrieveIconsSuccess) {
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.black,
+              centerTitle: true,
+              title: Text(
+                state.isCupertinoIcons ? 'Cupertino Icons' : 'Material Icons',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40,
                 ),
-                onPressed: () {
-                  if (_androidOrCupertino) {
-                    setState(() {
-                      _title = 'Cupertino Icons';
-                      _androidOrCupertino = false;
-                    });
-                  }
-                },
               ),
-            ),
-          ),
-          Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconButton(
-                icon: Icon(
-                  Icons.android,
-                  color: Colors.black,
+              actions: <Widget>[
+                Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: IconButton(
+                      icon: state.isCupertinoIcons
+                          ? Image.asset(
+                              'apple_logo.png',
+                            )
+                          : Icon(
+                              Icons.android,
+                              color: Colors.black,
+                            ),
+                      onPressed: () {
+                        BlocProvider.of<IconsBloc>(context).add(
+                          RetrieveIconsStarted(
+                            isToRetrieveCupertinoIcons: !state.isCupertinoIcons,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ),
-                onPressed: () {
-                  if (!_androidOrCupertino) {
-                    setState(() {
-                      _title = 'Material Icons';
-                      _androidOrCupertino = true;
-                    });
-                  }
-                },
-              ),
+              ],
+              elevation: 0,
             ),
-          ),
-        ],
-        elevation: 0,
-      ),
-      body: _androidOrCupertino ? _MaterialIcons() : _CupertinoIcons(),
-    );
-  }
-}
-
-class _MaterialIcons extends StatelessWidget {
-  const _MaterialIcons({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      itemCount: materialIcons.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 5,
-      ),
-      itemBuilder: (_, index) {
-        final iconModel = materialIcons[index];
-        return GridTile(
-          header: Padding(
-            padding: const EdgeInsets.only(
-              top: 32.0,
+            body: IconsGridView(
+              icons: state.icons,
             ),
-            child: Text(
-              iconModel.identifier,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 20,
-              ),
-            ),
-          ),
-          child: Icon(
-            iconModel.data,
-            size: 80,
-          ),
-        );
+          );
+        } else {
+          return Container();
+        }
       },
     );
   }
 }
 
-class _CupertinoIcons extends StatelessWidget {
-  const _CupertinoIcons({
+class IconsGridView extends StatelessWidget {
+  final List<IconModel> icons;
+
+  const IconsGridView({
     Key key,
+    this.icons,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      itemCount: cupertinoIcons.length,
+      itemCount: icons.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 5,
       ),
       itemBuilder: (_, index) {
-        final iconModel = cupertinoIcons[index];
+        final iconModel = icons[index];
         return GridTile(
           header: Padding(
             padding: const EdgeInsets.only(
