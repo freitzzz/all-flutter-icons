@@ -8,11 +8,11 @@ const RESOURCES = {
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "assets/FontManifest.json": "01700ba55b08a6141f33e168c4a6c22f",
 "assets/fonts/MaterialIcons-Regular.ttf": "56d3ffdef7a25659eab6a68a3fbfaf16",
-"assets/LICENSE": "0000d255865246c9b55862d96ffd3089",
+"assets/LICENSE": "7680001ded360e5357c42bb17a7e4d32",
 "assets/AssetManifest.json": "90a0150b4f52146d688fbd1408a8f459",
-"assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "115e937bb829a890521f72d2e664b632",
+"assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "9a62a954b81a1ad45a58b9bcea89b50b",
 "assets/assets/apple_logo.png": "39881236300a294d6d51ed96b703dd57",
-"main.dart.js": "3f3572162b1924d69b6012c712089a47"
+"main.dart.js": "38909de52a6ecf8b35622764105e13b8"
 };
 
 self.addEventListener('activate', function (event) {
