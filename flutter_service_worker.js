@@ -9,9 +9,10 @@ const RESOURCES = {
 "assets/FontManifest.json": "01700ba55b08a6141f33e168c4a6c22f",
 "assets/fonts/MaterialIcons-Regular.ttf": "56d3ffdef7a25659eab6a68a3fbfaf16",
 "assets/LICENSE": "0000d255865246c9b55862d96ffd3089",
-"assets/AssetManifest.json": "2efbb41d7877d10aac9d091f58ccd7b9",
+"assets/AssetManifest.json": "90a0150b4f52146d688fbd1408a8f459",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "115e937bb829a890521f72d2e664b632",
-"main.dart.js": "52f41fc661eb195ef5f030da0a76bedd"
+"assets/assets/apple_logo.png": "39881236300a294d6d51ed96b703dd57",
+"main.dart.js": "3f3572162b1924d69b6012c712089a47"
 };
 
 self.addEventListener('activate', function (event) {
